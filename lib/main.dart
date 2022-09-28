@@ -1,25 +1,19 @@
-import 'dart:html';
-import 'dart:js';
-
-import 'package:flutter/cupertino.dart';
+import '/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/transferencias/lista_transferencia.dart';
+void main() => runApp(
+      Banco(),
+    );
 
-void main() => runApp(Banco());
-
-//   MaterialApp(
-//     home: Scaffold(
-//       body: FormularioTransferencia(),
-//     ),
-//   ),
-// );
 class Banco extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Intl.defaultLocale = 'pt_BR';
     // TODO: implement build
     return MaterialApp(
-      home: ListaTransferencia(),
+      home: Scaffold(
+        body: MenuDashboard(),
+      ),
     );
   }
 }

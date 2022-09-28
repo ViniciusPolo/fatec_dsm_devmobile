@@ -9,6 +9,9 @@ const _dicaCampoNumeroConta = '0000';
 const _rotuloCampoValor = 'Valor';
 const _dicaCampoValor = '0.00';
 const _textoBotaoConfirmar = 'Confirmar';
+var yellow = Color.fromARGB(255, 255, 242, 18);
+var orange = Color.fromARGB(255, 236, 112, 0);
+var blue = Color.fromARGB(255, 0, 51, 153);
 
 class FormularioTransferencia extends StatefulWidget {
   @override
@@ -28,6 +31,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_tituloAppBar),
+        backgroundColor: Color.fromARGB(255, 236, 112, 0),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,7 +41,8 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
             Editor(_controllerCampoValor, _rotuloCampoValor, _dicaCampoValor,
                 Icons.monetization_on),
             ElevatedButton(
-              child: Text(_textoBotaoConfirmar),
+              child: Text(_textoBotaoConfirmar,
+                  style: TextStyle(fontSize: 20, color: yellow)),
               onPressed: () {
                 _criaTransferencia(context);
                 // Navigator.push(

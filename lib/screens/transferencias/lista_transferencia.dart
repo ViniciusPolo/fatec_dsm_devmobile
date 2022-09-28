@@ -1,11 +1,13 @@
 // Classe da lista de transações, chamada no body
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/transferencia.dart';
 import '../../models/transferencia.dart';
 import 'formulario_transferencia.dart';
 
-const _tituloAppBar = 'Transferências';
+const _tituloAppBar = 'Transferência';
+var yellow = Color.fromARGB(255, 255, 242, 18);
+var orange = Color.fromARGB(255, 236, 112, 0);
+var blue = Color.fromARGB(255, 0, 51, 153);
 
 class ListaTransferencia extends StatefulWidget {
   final List<Transferencia> _transferencias = [];
@@ -21,6 +23,13 @@ class ListaTransferenciaState extends State<ListaTransferencia> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+          title: Text(
+            _tituloAppBar,
+            style: TextStyle(fontSize: 20, color: yellow),
+          ),
+          backgroundColor: blue),
+      backgroundColor: orange,
       body: ListView.builder(
         itemCount: widget._transferencias.length,
         itemBuilder: ((context, indice) {
@@ -29,29 +38,31 @@ class ListaTransferenciaState extends State<ListaTransferencia> {
         }),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: blue,
         onPressed: () {
           final Future<Transferencia?> future = Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) {
-              return FormularioTransferencia();
-            }),
+            MaterialPageRoute(
+              builder: (context) {
+                return FormularioTransferencia();
+              },
+            ),
           );
-          future.then((transferenciaRecebida) {
-            debugPrint('Chegou no then do future');
-            debugPrint('$transferenciaRecebida');
-            if (transferenciaRecebida != null) {
-              setState(() {
-                debugPrint('$transferenciaRecebida');
-                widget._transferencias.add(transferenciaRecebida);
-                debugPrint('$widget');
-              });
-            }
-          });
+          future.then(
+            (transferenciaRecebida) {
+              if (transferenciaRecebida != null) {
+                setState(
+                  () {
+                    widget._transferencias.add(
+                      transferenciaRecebida,
+                    );
+                  },
+                );
+              }
+            },
+          );
         },
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: Text(_tituloAppBar),
+        child: Icon(Icons.add, color: yellow),
       ),
     );
   }
@@ -64,12 +75,19 @@ class ItemTransferencia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NumberFormat formatter = NumberFormat.simpleCurrency();
     // TODO: implement build
     return Card(
       child: ListTile(
-        leading: Icon(Icons.monetization_on),
-        title: Text(_transferencia.valor.toString()),
-        subtitle: Text(_transferencia.numeroConta.toString()),
+        leading: Icon(
+          Icons.monetization_on,
+        ),
+        title: Text(
+          formatter.format(_transferencia.valor),
+        ),
+        subtitle: Text(
+          _transferencia.numeroConta.toString(),
+        ),
       ),
     );
   }
